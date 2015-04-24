@@ -15,6 +15,7 @@ modulo1.controller("mainCtrl",[
 		{title: "post6", upvotes: 5}];
 		//metodo de controlador 
 		$scope.addPost=function(){
+			//para obtener una coparacion con el or 
 		if (!$scope.title || $scope.title === "")
 		{
 			alert("No se permiter tittulos vacios")
@@ -28,6 +29,7 @@ modulo1.controller("mainCtrl",[
 					link:$scpoe.link,
 					upvotes:0
 				});
+			//scope.lin o title permite que se borren los contenidp 
 			$scope.title="";
 			$scope.link=""; 
 	//two-way data binding
