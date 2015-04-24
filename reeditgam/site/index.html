@@ -6,11 +6,12 @@
 	
 </head>
  <!-- ng controla el body-->
+ <!-- ng controla el body-->
  <body ng-app="reeditgam"
  ng-controller="mainCtrl">
- <div ng-repeat="post in post">
-	{{post}}
-	{{post}} - Likes: {{post.upvotes}}
+ <button ng-click="addPost ()">Postear</button>
+<div ng-repeat="post in post | orderBy: '-upvotes'">
+	{{post.title}} - Likes: {{post.upvotes}}
  </div>
  	<script type="text/javascript"
  	src="./vendor/angular/angular.js"></script>
