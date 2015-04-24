@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lag="es">
 <head>
- 	<meta charset="UTF-8">
- 	<title>rededitgam</title>
+	<meta charset="UTF-8">
+	<title>rededitgam</title>
+	<link rel="stylesheet"
+	href="./vendor/bootstrap/css/bootstra.css">
+
+<style> 
+
+	.glyphicon-thumbs-up {cursor:pointer;}
+	</style>
 	
 </head>
- <!-- ng controla el body-->
- <!-- ng controla el body-->
- <body ng-app="reeditgam"
- ng-controller="mainCtrl">
- <button ng-click="addPost ()">Postear</button>
-<div ng-repeat="post in post | orderBy: '-upvotes'">
-	{{post.title}} - Likes: {{post.upvotes}}
- </div>
- 	<script type="text/javascript"
- 	src="./vendor/angular/angular.js"></script>
- 		 <!--cargando app.js-->
+<!-- ng controla el body-->
+<body ng-app="reeditgam"
+ng-controller="mainCtrl">
+<!-->creando formulario</!-->
+
+<form ng-submit="addPost ()"> 
+<!--agregando titulo-->	
+<input type="text" ng-model="title">
+<!--agregando link-->
+<br>
+<input type="" ng -model="link">
+<br>
+<button type="submit"> post</button>
+</form>
+
+<div ng-repeat="post in post |orderBy:'-upvotes'"> <!--enlugar del arroba se pone test -->
+	<span ng-click="incrementUpvotes (post)">^</span>
+<!--agregando links-->
+		<a ng-show ="post.link" href="{{post.link}}">
+			{{post.title}} 
+		</a>
+<span ng-hide ="post.link">
+	{{post.title}} 
+</span>
+-likes: {{post.upvotes}}
+<!--	{{post.title}} -likes: {{post.upvotes}}-->
+	<!--foreach   recorre cada uno -->
+</div>
+	<!--cargando librerias,es una buena practica al final ,cargando scripst ,cargando bootstrap-->
+	<script type="text/javascript"
+	src="./vendor/angular/angular.js"></script>
+	 <!--cargando app.js-->
+	
 	 <script
 	  type="text/javascript"
     src="./scripts/app.js">
