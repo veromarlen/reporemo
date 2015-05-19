@@ -1,9 +1,9 @@
-console.log("#Vero: Cargo app.js");
+console.log("#veromarlen: Cargo app.js");
 // Inyectadon el modulo de ui-router
 // como parametro del arreglo de objetos
 // del modulo
 var modulo1 = 
-	angular.module("reeditgam",['ui.router']);
+	angular.module("reeditgam",['ui.router','hSweetAlert']);
 
 // Configurando las rutas
 // Recibe un arreglo de elementos
@@ -61,8 +61,8 @@ modulo1.factory('posts',[function(){
 // dependency injection
 // Creando controlador mainCtrl
 modulo1.controller("mainCtrl",[
-	'$scope','posts', // Inyectando factory post
-	function($scope, posts){
+	'$scope','posts','sweet', // Inyectando factory post
+	function($scope, posts, sweet){
 		$scope.test = "Hola Angular";
 		
 		// Modelo al cual se le asigna
@@ -73,7 +73,8 @@ modulo1.controller("mainCtrl",[
 		 $scope.addPost = function(){
 		 	if(!$scope.title || $scope.title === "")
 		 	{
-		 		alert("No se permite postear titulos vacios");
+		 		//alert("No se permite postear titulos vacios");
+				 sweet.show('No se permite postear titulos vacios');
 		 		return;
 		 	}
 		 	$scope.posts.push(
