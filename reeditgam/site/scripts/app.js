@@ -1,43 +1,85 @@
-console.log("cargo app.js");
-//<!--parametros-->
-var modulo1 =
-angular.module("reeditgam",[]);
-modulo1.controller("mainCtrl",[
-	'$scope',
-	function($scope){
-		$scope.test = "Hola angular";
-		$scope.post =
-		[{title:"post1",upvotes:5},
-		{title: "post2", upvotes: 15},
-		{title: "post3", upvotes:  7},
-		{title: "post4", upvotes: 9},
-		{title: "post5",  upvotes: 3},
-		{title: "post6", upvotes: 5}];
-		//metodo de controlador 
-		$scope.addPost=function(){
-			//para obtener una coparacion con el or 
-		if (!$scope.title || $scope.title === "")
-		{
-			alert("No se permiter tittulos vacios")
-			return;
+console.log("#Vero: Cargo app.js");
+// Inyectadon el modulo de ui-router
+// como parametro del arreglo de objetos
+// del modulo
+var modulo1 = 
+	angular.module("reeditgam",['ui.router']);
 
-		}	//$scope.posts.push(
-			
-			$scope.post.push(
-				{
-					title:$scope.title, 
-					link:$scpoe.link,
-					upvotes:0
-				});
-			//scope.lin o title permite que se borren los contenidp 
-			$scope.title="";
-			$scope.link=""; 
-	//two-way data binding
-		};
-		//metodo que incrementa el voto de un post en una uni
-		$scope.incrementUpvotes =function (post){
-			post.upvotes +=1;
-		};
+// Configurando las rutas
+// Recibe un arreglo de elementos
+modulo1.config(
+	['$stateProvider',
+	'$urlRouterProvider',
+	function($stateProvider, $urlRouterProvider){
+		// Iniciando rutina de configuracion
+		$stateProvider.state('home',{
+			//Definiendo estado como un objeto
+			url:"/home", // Url que define el estado
+			templateUrl: "/home.html", // Plantilla base para el estado
+			controller: 'mainCtrl'
+		});
+		// Url por defecto
+		$urlRouterProvider.otherwise('home');
+	}]);
 
-
+// Creando un servicio del tipo factory
+modulo1.factory('posts',[function(){
+	// Cuerpo del factory llamado post
+	var o = {
+		posts : [
+			{	
+				title: "post 1", upvotes: 15,
+				comments: [
+					{author: "Karina", body:"Esto esta de pelos.",
+					upvotes:3},
+					{author: "Gamaliel", body:"Esto es basura.",
+					upvotes:0}]
+			},
+			{	
+				title: "post 2", upvotes: 4,
+				comments: [
+					{author: "Coco", body:"Esto es asombroso.",
+					upvotes:5},
+					{author: "Cristian", body:"Esto esta aburrido.",
+					upvotes:1}]
+			}
+		]
+	};
+	// Retronado objeto de datos persistentes
+	return o;
 }]);
+
+// Creando controlador	
+// dependcy injection
+modulo1.controller("mainCtrl",[
+	'$scope','posts', // Inyectando factory post
+	function($scope, posts){
+		$scope.test = "Hola Angular";
+		
+		// Modelo al cual se le asigna
+		// el resultado del factory
+		$scope.posts = posts.posts;
+
+		 // Metodo del controlador
+		 $scope.addPost = function(){
+		 	if(!$scope.title || $scope.title === "")
+		 	{
+		 		alert("No se permite postear titulos vacios");
+		 		return;
+		 	}
+		 	$scope.posts.push(
+		 		{
+		 			title: $scope.title,
+		 			link: $scope.link,
+		 		 	upvotes: 0
+		 		 });
+		 	// Two-way data binding
+		 	$scope.title = "";
+		 	$scope.link = "";
+		 };
+		 // Metodo que incrementa el voto
+		 // de un post en una unidad
+		 $scope.incrementUpvotes = function(post){
+		 	post.upvotes += 1;
+		 };
+	}]);
